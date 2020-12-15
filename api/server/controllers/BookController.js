@@ -1,4 +1,5 @@
 import BookService from "../services/BookService"
+import { development } from "../src/config/config"
 import Util from "../utils/Util"
 
 const util = new Util()
@@ -61,6 +62,7 @@ class BookController {
 
     if (!Number(id)) {
       util.setError(400, "Please input a valid numeric value")
+
       return util.send(res)
     }
 
