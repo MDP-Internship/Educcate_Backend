@@ -7,11 +7,11 @@ module.exports = {
   // },
 
   development: {
-    database: "books",
+    database: "edducate",
     username: "postgres",
     password: "admin",
     host: "127.0.0.1",
-    dialect: "postgres",
+    dialect: "postgres", //hangi databese ile çalıştığın (örnek mysql de olabilirdi)
   },
 
   test: {
