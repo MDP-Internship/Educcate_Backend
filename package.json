@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon --exec babel-node ./api/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node ./api/index.js"
+    "start": "babel-node ./api/index.js",
+    "build": "npm run build-babel",
+    "build-babel": "babel -d ./build ./api -s"
   },
   "keywords": [],
   "author": "",
