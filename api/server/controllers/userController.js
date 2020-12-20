@@ -43,8 +43,8 @@ class LoginController {
     const { email, password } = req.body
     const reqFullBody = req.body
     const isLoginValidateResult = loginValidate(reqFullBody)
-    console.log(isLoginValidateResult.res)
-    if (isLoginValidateResult.res) {
+    console.log(isLoginValidateResult.type)
+    if (isLoginValidateResult.type) {
       const userRes = await LoginService.login(email)
 
       if (!userRes) {
@@ -102,7 +102,9 @@ class LoginController {
     res.json({ type: true, message: "güncelleme işlemi başarılı" })
   }
 
-  static async deleteUser(req, res) {}
+  static async deleteUser(req, res) {
+    const deleteUser = await LoginService.deleteUser(id)
+  }
 }
 
 export default LoginController

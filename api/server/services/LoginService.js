@@ -34,5 +34,16 @@ class LoginService {
       throw error
     }
   }
+  static async deleteUser(id) {
+    try {
+      const user = await db.User.findOne({ where: { id } })
+      if (user) {
+        return db.User.update({ isRemoved: 1 }, { where: { id: user.id } })
+      }
+      return null
+    } catch (err) {
+      throw err
+    }
+  }
 }
 export default LoginService
