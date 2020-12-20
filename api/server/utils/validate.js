@@ -5,14 +5,14 @@ export function registerValidate(object) {
     surname: Joi.string().required().min(3),
     email: Joi.string().required().min(3),
     password: Joi.string().required().min(6),
-    roleId: Joi.number().required(),
+    roleId: Joi.string(),
   })
 
   const result = registerSchema.validate(object, { abortEarly: false })
 
   if (result.error) {
     return {
-      res: false,
+      type: false,
       error: {
         message: result.error.message,
         value: result.error.details[0].context.value,
@@ -20,7 +20,7 @@ export function registerValidate(object) {
     }
   }
   return {
-    res: true,
+    type: true,
   }
 }
 
@@ -32,7 +32,7 @@ export function loginValidate(object) {
   const result = loginSchema.validate(object, { abortEarly: false })
   if (result.error) {
     return {
-      res: false,
+      type: false,
       error: {
         message: result.error.message,
         value: result.error.details[0].context.value,
@@ -41,6 +41,6 @@ export function loginValidate(object) {
   }
 
   return {
-    res: true,
+    type: true,
   }
 }

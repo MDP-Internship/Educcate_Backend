@@ -16,5 +16,10 @@ class LoginService {
       throw err
     }
   }
+
+  static async getAll() {
+    const userGet = db.User.findAll()
+    return userGet
+  }
 }
 export default LoginService

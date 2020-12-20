@@ -2,7 +2,7 @@ import config from "dotenv"
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
-import loginRoutes from "./server/routes/LoginRoutes"
+import userRoutes from "./server/routes/userRoutes"
 
 config.config()
 
@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 const port = process.env.PORT || 8000
 app.use(cors())
 
-app.use("/user", loginRoutes)
+app.use("/user", userRoutes)
 
 // when a random route is inputed
 app.get("*", (req, res) =>

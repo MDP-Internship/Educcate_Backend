@@ -4,8 +4,6 @@ import bcrypt from "bcrypt"
 import { encrypText } from "../src/config/settings"
 import Helpers from "../utils/Util"
 import Util from "../utils/Util"
-import LoginRoutes from "../routes/LoginRoutes"
-import router from "../routes/LoginRoutes"
 
 const app = express()
 const util = new Util()

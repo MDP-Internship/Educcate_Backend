@@ -25,10 +25,10 @@ class LoginController {
           roleId
         )
 
-        res.json(userRes._previousDataValues)
+        res.json({ type: true, data: userRes._previousDataValues })
       } catch (err) {
         console.log(err)
-        return res.json({ status: "error" })
+        return res.json({ type: false, message: err })
       }
     }
     res.json(isRegisterValidateResult.error)
@@ -57,15 +57,25 @@ class LoginController {
           { expiresIn: 1000 }
         )
         console.log(token)
-        return res.json({ status: "ok", token: token })
+        return res.json({ type: true, token: token })
       }
       res.json({ error: "e-mail and password incorrect" })
     }
     res.json(isLoginValidateResult.error)
   }
 
-  static async changePassword(req, res) {
-    const { email, password } = req.body
+  static async userGetAll(req, res) {
+    const getAllResult = await LoginService.getAll()
+    const data = getAllResult.map((i) => {
+      return {
+        id: i.id,
+        name: i.name,
+        surname: i.surname,
+        email: i.email,
+        roleId: i.roleId,
+      }
+    })
+    res.json(data)
   }
 }
 
