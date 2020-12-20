@@ -9,12 +9,17 @@ const util = new Util()
 
 class LoginController {
   static async register(req, res) {
-    console.log(req.body)
-    const { name, surname, email, password: cryptedPassword, roleId } = req.body
+    const {
+      name,
+      surname,
+      email,
+      password: cryptedPassword,
+      roleId = "0",
+    } = req.body
     const reqFullBody = req.body
     const isRegisterValidateResult = registerValidate(reqFullBody)
 
-    if (isRegisterValidateResult.res) {
+    if (isRegisterValidateResult.type) {
       const password = await bcrypt.hash(cryptedPassword, 10)
       try {
         const userRes = await LoginService.register(
