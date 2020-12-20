@@ -21,5 +21,18 @@ class LoginService {
     const userGet = db.User.findAll()
     return userGet
   }
+
+  static async updateUser(id, name, surname, email, roleId) {
+    try {
+      const userUpdate = await db.User.update(
+        { name, surname, email, roleId },
+        { where: { id } }
+      )
+
+      return userUpdate
+    } catch (error) {
+      throw error
+    }
+  }
 }
 export default LoginService

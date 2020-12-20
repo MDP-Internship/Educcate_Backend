@@ -77,6 +77,27 @@ class LoginController {
     })
     res.json(data)
   }
+
+  static async updateUserInfo(req, res) {
+    const { id, name, surname, email, roleId } = req.body
+    const updateUser = await LoginService.updateUser(
+      id,
+      name,
+      surname,
+      email,
+      roleId
+    )
+    console.log(updateUser)
+    if (!updateUser) {
+      res.json({
+        type: false,
+        message: "kullanıcı bulunamadı",
+      })
+    }
+    res.json({ type: true, message: "güncelleme işlemi başarılı" })
+  }
+
+  static async deleteUser(req, res) {}
 }
 
 export default LoginController
