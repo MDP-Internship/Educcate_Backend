@@ -12,6 +12,29 @@ class Helpers {
       throw err
     }
   }
+
+  static async isAdmin(id) {
+    try {
+      const user = await db.User.findOne({ where: { id } })
+      if (user) {
+        return await db.User.findOne({
+          where: { id: user.roleId },
+        })
+      }
+      return null
+    } catch (error) {
+      throw error
+    }
+  }
+
+  static async userIsRemoved(id) {
+    try {
+      const user = await db.Users.findOne({ where: { id } })
+      return user.isRemoved
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default Helpers
