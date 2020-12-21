@@ -5,7 +5,8 @@ export function registerValidate(object) {
     surname: Joi.string().required().min(3),
     email: Joi.string().required().min(3),
     password: Joi.string().required().min(6),
-    roleId: Joi.string(),
+    roleId: Joi.number(),
+    isRemoved: Joi.number(),
   })
 
   const result = registerSchema.validate(object, { abortEarly: false })
