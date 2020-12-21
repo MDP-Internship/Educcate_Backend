@@ -14,7 +14,7 @@ app.use(async (req, res, next) => {
     util.send(401, "Token cannot empty")
     return util.send(res)
   }
-  jwt.verify(token, encrypText, (err, decoded) => {
+  jwt.verify(token, bcrypt.compare(encrypText), (err, decoded) => {
     if (err) {
       util.setError(401, "Your Access is denied")
       return util.send(res)
