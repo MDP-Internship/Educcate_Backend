@@ -84,7 +84,8 @@ class LoginController {
   }
 
   static async updateUserInfo(req, res) {
-    const { id, name, surname, email, roleId } = req.body
+    const { id } = req.params
+    const { name, surname, email, roleId } = req.body
     const updateUser = await LoginService.updateUser(
       id,
       name,
@@ -103,7 +104,18 @@ class LoginController {
   }
 
   static async deleteUser(req, res) {
+    const { id } = req.params
     const deleteUser = await LoginService.deleteUser(id)
+    if (!deleteUser) {
+      res.json({
+        type: false,
+        message: "User is not found",
+      })
+    }
+    res.json({
+      type: true,
+      message: "user is delete",
+    })
   }
 }
 

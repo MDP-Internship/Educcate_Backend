@@ -12,7 +12,7 @@ sequelize model:create --name User --attributes name:string,surname:string,roleI
 - Demo user oluşturma : 
 `sequelize db:seed:generate --name demo-user`
 
-sequelize model:create --name User --attributes name:string,surname:string,email:string,password:string,roleId:string,token:string
+sequelize model:create --name User --attributes name:string,surname:string,email:string,password:string,roleId:integer,isRemoved:integer
 
 
 
