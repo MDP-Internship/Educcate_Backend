@@ -3,6 +3,7 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import LoginService from "../services/LoginService"
 import Helpers from "../utils/helpers"
+import { encrypText } from "../src/config/settings"
 import { registerValidate, loginValidate } from "../utils/validate"
 import user from "../src/models/user"
 
@@ -92,35 +93,68 @@ class LoginController {
   static async updateUserInfo(req, res) {
     const { id } = req.params
     const { name, surname, email, roleId } = req.body
-    const updateUser = await LoginService.updateUser(
-      id,
-      name,
-      surname,
-      email,
-      roleId
-    )
-    console.log(updateUser)
-    if (!updateUser) {
-      res.json({
-        type: false,
-        message: "kullanıcı bulunamadı",
-      })
-    }
-    res.json({ type: true, message: "güncelleme işlemi başarılı" })
+    const token = req.headers.authorization
+
+    jwt.verify(token, bcrypt.compare(encrypText), async (err, decoded) => {
+      if (!decoded || err) {
+        res.json({ type: false, message: "Your access is denied" })
+      }
+      const isAdmin = await Helpers.isAdmin(decoded.id)
+      const isRemoved = await Helpers.userIsRemoved(decoded.id)
+
+      if (isRemoved === 1) {
+        res.json({ type: false, message: "Your account is not active" })
+      }
+      if (isAdmin.type != 0) {
+        res.json({ type: false, message: "Permission denied" })
+      }
+      const updateUser = await LoginService.updateUser(
+        id,
+        name,
+        surname,
+        email,
+        roleId
+      )
+      console.log(updateUser)
+      if (!updateUser) {
+        res.json({
+          type: false,
+          message: "kullanıcı bulunamadı",
+        })
+      }
+      res.json({ type: true, message: "güncelleme işlemi başarılı" })
+    })
   }
 
   static async deleteUser(req, res) {
+    const token = req.headers.authorization
     const { id } = req.params
-    const deleteUser = await LoginService.deleteUser(id)
-    if (!deleteUser) {
+
+    jwt.verify(token, bcrypt.compare(encrypText), async (err, decoded) => {
+      if (!decoded || err) {
+        res.json({ type: false, message: "Your access is denied" })
+      }
+
+      const isAdmin = await Helpers.isAdmin(decoded.id)
+      const isRemoved = await Helpers.userIsRemoved(decoded.id)
+
+      if (isRemoved === 1) {
+        res.json({ type: false, message: "Your account is not active" })
+      }
+      if (isAdmin.type != 0) {
+        res.json({ type: false, message: "Permission denied" })
+      }
+      const deleteUser = await LoginService.deleteUser(id)
+      if (!deleteUser) {
+        res.json({
+          type: false,
+          message: "User is not found",
+        })
+      }
       res.json({
-        type: false,
-        message: "User is not found",
+        type: true,
+        message: "user is delete",
       })
-    }
-    res.json({
-      type: true,
-      message: "user is delete",
     })
   }
 }
