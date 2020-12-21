@@ -1,7 +1,8 @@
-import Util from "../utils/Util"
+import Util from "../utils/util"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import LoginService from "../services/LoginService"
+import Helpers from "../utils/helpers"
 import { registerValidate, loginValidate } from "../utils/validate"
 import user from "../src/models/user"
 
@@ -17,26 +18,31 @@ class LoginController {
       roleId = "0",
     } = req.body
     const reqFullBody = req.body
-    const isRegisterValidateResult = registerValidate(reqFullBody)
+    const isHaveUser = await Helpers.isHaveUser(email)
 
-    if (isRegisterValidateResult.type) {
-      const password = await bcrypt.hash(cryptedPassword, 10)
-      try {
-        const userRes = await LoginService.register(
-          name,
-          surname,
-          email,
-          password,
-          roleId
-        )
+    if (!isHaveUser) {
+      const isRegisterValidateResult = registerValidate(reqFullBody)
 
-        res.json({ type: true, data: userRes._previousDataValues })
-      } catch (err) {
-        console.log(err)
-        return res.json({ type: false, message: err })
+      if (isRegisterValidateResult.type) {
+        const password = await bcrypt.hash(cryptedPassword, 10)
+        try {
+          const userRes = await LoginService.register(
+            name,
+            surname,
+            email,
+            password,
+            roleId
+          )
+
+          res.json({ type: true, data: userRes._previousDataValues })
+        } catch (err) {
+          console.log(err)
+          return res.json({ type: false, message: err })
+        }
       }
+      res.json(isRegisterValidateResult.error)
     }
-    res.json(isRegisterValidateResult.error)
+    res.json({ type: false, message: "email kullanımda" })
   }
 
   static async login(req, res) {
