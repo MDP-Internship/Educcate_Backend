@@ -1,1 +1,1 @@
-web: npm run babel-run
+web: npm run heroku-postbuild
