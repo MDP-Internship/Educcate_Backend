@@ -21,6 +21,8 @@ var _index = _interopRequireDefault(require("./server/admin/index"));
 
 var _checkauth = _interopRequireDefault(require("./server/middleware/checkauth"));
 
+_dotenv["default"].config();
+
 var app = (0, _express["default"])();
 app.use(_bodyParser["default"].json());
 app.use(_bodyParser["default"].urlencoded({
@@ -37,8 +39,9 @@ app.get("*", function (req, res) {
     message: "Welcome to this API."
   });
 });
-app.listen(port, function () {
-  console.log("Server is running on PORT ".concat(port));
+var porta = process.env.PORT || 8080;
+app.listen(porta, function () {
+  return console.log("Example app listening on port 8080!");
 });
 var _default = app;
 exports["default"] = _default;
