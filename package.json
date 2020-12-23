@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "babel-node ./api/index.js",
     "build": "npm run build-babel",
-    "build-babel": "babel -d ./build ./api -s"
+    "build-babel": "babel -d ./build ./api -s",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
