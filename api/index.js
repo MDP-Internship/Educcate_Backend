@@ -6,6 +6,8 @@ import userRoutes from "./server/user/routes/UserRoutes"
 import adminRoutes from "./server/admin/index"
 import tokenControl from "./server/middleware/checkauth"
 
+config.config()
+
 const app = express()
 
 app.use(bodyParser.json())
@@ -23,9 +25,7 @@ app.get("*", (req, res) =>
     message: "Welcome to this API.",
   })
 )
-
-app.listen(port, () => {
-  console.log(`Server is running on PORT ${port}`)
-})
+const porta = process.env.PORT || 8080
+app.listen(porta, () => console.log("Example app listening on port 8080!"))
 
 export default app
