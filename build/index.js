@@ -15,9 +15,11 @@ var _bodyParser = _interopRequireDefault(require("body-parser"));
 
 var _cors = _interopRequireDefault(require("cors"));
 
-var _LoginRoutes = _interopRequireDefault(require("./server/routes/LoginRoutes"));
+var _UserRoutes = _interopRequireDefault(require("./server/user/routes/UserRoutes"));
 
-_dotenv["default"].config();
+var _index = _interopRequireDefault(require("./server/admin/index"));
+
+var _checkauth = _interopRequireDefault(require("./server/middleware/checkauth"));
 
 var app = (0, _express["default"])();
 app.use(_bodyParser["default"].json());
@@ -26,7 +28,9 @@ app.use(_bodyParser["default"].urlencoded({
 }));
 var port = process.env.PORT || 8000;
 app.use((0, _cors["default"])());
-app.use("/user", _LoginRoutes["default"]); // when a random route is inputed
+app.use("/user", _UserRoutes["default"]);
+app.use(_checkauth["default"]);
+app.use("/admin", _index["default"]); // when a random route is inputed
 
 app.get("*", function (req, res) {
   return res.status(200).send({
