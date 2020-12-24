@@ -10,7 +10,8 @@
     "build": "npm run build-babel",
     "build-babel": "babel -d ./build ./api -s",
     "clean": "rm -rf build && mkdir build",
-    "babel-run": "node ./build/index.js",
+    "babel-start": "node ./build/index.js",
+    "babel-run": "npm run build-babel && npm run babel-start",
     "heroku-postbuild": "npm run build"
   },
   "keywords": [],
