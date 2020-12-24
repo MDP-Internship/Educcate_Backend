@@ -1,1 +1,1 @@
-web: NODE_ENV=FALSE node ./build/index.js
+web: node ./build/index.js
