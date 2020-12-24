@@ -1,1 +1,1 @@
-web: npm run babel-run
+web: node ./build/index.js
