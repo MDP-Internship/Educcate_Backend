@@ -30,8 +30,8 @@ app.use(_bodyParser["default"].urlencoded({
 }));
 var port = process.env.PORT || 8000;
 app.use((0, _cors["default"])());
-app.use("/user", _UserRoutes["default"]);
-app.use(_checkauth["default"]);
+app.use("/user", _UserRoutes["default"]); //app.use(tokenControl)
+
 app.use("/admin", _index["default"]); // when a random route is inputed
 
 app.get("*", function (req, res) {
