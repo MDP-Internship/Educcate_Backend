@@ -52,3 +52,5 @@ app.listen(porta, function () {
 var _default = app
 exports["default"] = _default
 //# sourceMappingURL=index.js.map
+
+//babel-node ./api/index.js
