@@ -16,8 +16,6 @@ var _settings = require("../src/config/settings");
 
 var _Util = _interopRequireDefault(require("../utils/Util"));
 
-var _LoginRoutes = _interopRequireDefault(require("../routes/LoginRoutes"));
-
 var app = (0, _express["default"])();
 var util = new _Util["default"]();
 app.use( /*#__PURE__*/function () {
@@ -40,7 +38,7 @@ app.use( /*#__PURE__*/function () {
           case 4:
             _jsonwebtoken["default"].verify(token, _settings.encrypText, function (err, decoded) {
               if (err) {
-                util.setError(401, "Your Access is denied");
+                util.setError(401, "Token not found");
                 return util.send(res);
               }
 
@@ -61,4 +59,5 @@ app.use( /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }());
+module.exports = app;
 //# sourceMappingURL=checkauth.js.map

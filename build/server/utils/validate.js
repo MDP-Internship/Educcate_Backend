@@ -16,7 +16,8 @@ function registerValidate(object) {
     surname: _joi["default"].string().required().min(3),
     email: _joi["default"].string().required().min(3),
     password: _joi["default"].string().required().min(6),
-    roleId: _joi["default"].number().required()
+    roleId: _joi["default"].number(),
+    isRemoved: _joi["default"].number()
   });
 
   var result = registerSchema.validate(object, {
@@ -25,7 +26,7 @@ function registerValidate(object) {
 
   if (result.error) {
     return {
-      res: false,
+      type: false,
       error: {
         message: result.error.message,
         value: result.error.details[0].context.value
@@ -34,7 +35,7 @@ function registerValidate(object) {
   }
 
   return {
-    res: true
+    type: true
   };
 }
 
@@ -50,7 +51,7 @@ function loginValidate(object) {
 
   if (result.error) {
     return {
-      res: false,
+      type: false,
       error: {
         message: result.error.message,
         value: result.error.details[0].context.value
@@ -59,7 +60,7 @@ function loginValidate(object) {
   }
 
   return {
-    res: true
+    type: true
   };
 }
 //# sourceMappingURL=validate.js.map

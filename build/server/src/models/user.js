@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
@@ -16,7 +16,7 @@ function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflec
 
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-var _require = require("sequelize"),
+var _require = require('sequelize'),
     Model = _require.Model;
 
 module.exports = function (sequelize, DataTypes) {
@@ -44,16 +44,17 @@ module.exports = function (sequelize, DataTypes) {
     return User;
   }(Model);
 
+  ;
   User.init({
     name: DataTypes.STRING,
     surname: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    roleId: DataTypes.STRING,
-    token: DataTypes.STRING
+    roleId: DataTypes.INTEGER,
+    isRemoved: DataTypes.INTEGER
   }, {
     sequelize: sequelize,
-    modelName: "User"
+    modelName: 'User'
   });
   return User;
 };

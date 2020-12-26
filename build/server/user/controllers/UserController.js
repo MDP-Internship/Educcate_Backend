@@ -15,77 +15,99 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _Util = _interopRequireDefault(require("../utils/Util"));
+var _util = _interopRequireDefault(require("../../utils/util"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
-var _LoginService = _interopRequireDefault(require("../services/LoginService"));
+var _UserService = _interopRequireDefault(require("../services/UserService"));
 
-var _validate = require("../utils/validate");
+var _helpers = _interopRequireDefault(require("../../utils/helpers"));
 
-var _user = _interopRequireDefault(require("../src/models/user"));
+var _settings = require("../../src/config/settings");
 
-var util = new _Util["default"]();
+var _validate = require("../../utils/validate");
 
-var LoginController = /*#__PURE__*/function () {
-  function LoginController() {
-    (0, _classCallCheck2["default"])(this, LoginController);
+var util = new _util["default"]();
+
+var UserController = /*#__PURE__*/function () {
+  function UserController() {
+    (0, _classCallCheck2["default"])(this, UserController);
   }
 
-  (0, _createClass2["default"])(LoginController, null, [{
+  (0, _createClass2["default"])(UserController, null, [{
     key: "register",
     value: function () {
       var _register = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res) {
-        var _req$body, name, surname, email, cryptedPassword, roleId, reqFullBody, isRegisterValidateResult, password, userRes;
+        var _req$body, name, surname, email, cryptedPassword, _req$body$roleId, roleId, _req$body$isRemoved, isRemoved, reqFullBody, isHaveUser, isRegisterValidateResult, password, userRes;
 
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log(req.body);
-                _req$body = req.body, name = _req$body.name, surname = _req$body.surname, email = _req$body.email, cryptedPassword = _req$body.password, roleId = _req$body.roleId;
+                _req$body = req.body, name = _req$body.name, surname = _req$body.surname, email = _req$body.email, cryptedPassword = _req$body.password, _req$body$roleId = _req$body.roleId, roleId = _req$body$roleId === void 0 ? "0" : _req$body$roleId, _req$body$isRemoved = _req$body.isRemoved, isRemoved = _req$body$isRemoved === void 0 ? "0" : _req$body$isRemoved;
                 reqFullBody = req.body;
-                isRegisterValidateResult = (0, _validate.registerValidate)(reqFullBody);
+                _context.next = 4;
+                return _helpers["default"].isHaveUser(email);
 
-                if (!isRegisterValidateResult.res) {
-                  _context.next = 19;
+              case 4:
+                isHaveUser = _context.sent;
+
+                if (isHaveUser) {
+                  _context.next = 23;
                   break;
                 }
 
-                _context.next = 7;
+                isRegisterValidateResult = (0, _validate.registerValidate)(reqFullBody);
+
+                if (!isRegisterValidateResult.type) {
+                  _context.next = 22;
+                  break;
+                }
+
+                _context.next = 10;
                 return _bcrypt["default"].hash(cryptedPassword, 10);
 
-              case 7:
+              case 10:
                 password = _context.sent;
-                _context.prev = 8;
-                _context.next = 11;
-                return _LoginService["default"].register(name, surname, email, password, roleId);
+                _context.prev = 11;
+                _context.next = 14;
+                return _UserService["default"].register(name, surname, email, password, roleId, isRemoved);
 
-              case 11:
+              case 14:
                 userRes = _context.sent;
-                res.json(userRes._previousDataValues);
-                _context.next = 19;
+                res.json({
+                  type: true,
+                  data: userRes._previousDataValues
+                });
+                _context.next = 22;
                 break;
 
-              case 15:
-                _context.prev = 15;
-                _context.t0 = _context["catch"](8);
+              case 18:
+                _context.prev = 18;
+                _context.t0 = _context["catch"](11);
                 console.log(_context.t0);
                 return _context.abrupt("return", res.json({
-                  status: "error"
+                  type: false,
+                  message: _context.t0
                 }));
 
-              case 19:
+              case 22:
                 res.json(isRegisterValidateResult.error);
 
-              case 20:
+              case 23:
+                res.send({
+                  type: false,
+                  message: "email adresi kullanımda"
+                });
+
+              case 24:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[8, 15]]);
+        }, _callee, null, [[11, 18]]);
       }));
 
       function register(_x, _x2) {
@@ -107,15 +129,15 @@ var LoginController = /*#__PURE__*/function () {
                 _req$body2 = req.body, email = _req$body2.email, password = _req$body2.password;
                 reqFullBody = req.body;
                 isLoginValidateResult = (0, _validate.loginValidate)(reqFullBody);
-                console.log(isLoginValidateResult.res);
+                console.log(isLoginValidateResult.type);
 
-                if (!isLoginValidateResult.res) {
+                if (!isLoginValidateResult.type) {
                   _context2.next = 17;
                   break;
                 }
 
                 _context2.next = 7;
-                return _LoginService["default"].login(email);
+                return _UserService["default"].login(email);
 
               case 7:
                 userRes = _context2.sent;
@@ -144,13 +166,14 @@ var LoginController = /*#__PURE__*/function () {
                   id: userRes.id,
                   name: userRes.name,
                   email: userRes.email,
-                  roleId: userRes.roleId
-                }, "secret key", {
+                  roleId: userRes.roleId,
+                  isRemoved: userRes.isRemoved
+                }, _settings.encrypText, {
                   expiresIn: 1000
                 });
                 console.log(token);
                 return _context2.abrupt("return", res.json({
-                  status: "ok",
+                  type: true,
                   token: token
                 }));
 
@@ -177,18 +200,31 @@ var LoginController = /*#__PURE__*/function () {
       return login;
     }()
   }, {
-    key: "changePassword",
+    key: "userGetAll",
     value: function () {
-      var _changePassword = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res) {
-        var _req$body3, email, password;
-
+      var _userGetAll = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(req, res) {
+        var getAllResult, data;
         return _regenerator["default"].wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                _req$body3 = req.body, email = _req$body3.email, password = _req$body3.password;
+                _context3.next = 2;
+                return _UserService["default"].getAll();
 
-              case 1:
+              case 2:
+                getAllResult = _context3.sent;
+                data = getAllResult.map(function (i) {
+                  return {
+                    id: i.id,
+                    name: i.name,
+                    surname: i.surname,
+                    email: i.email,
+                    roleId: i.roleId
+                  };
+                });
+                res.json(data);
+
+              case 5:
               case "end":
                 return _context3.stop();
             }
@@ -196,16 +232,16 @@ var LoginController = /*#__PURE__*/function () {
         }, _callee3);
       }));
 
-      function changePassword(_x5, _x6) {
-        return _changePassword.apply(this, arguments);
+      function userGetAll(_x5, _x6) {
+        return _userGetAll.apply(this, arguments);
       }
 
-      return changePassword;
+      return userGetAll;
     }()
   }]);
-  return LoginController;
+  return UserController;
 }();
 
-var _default = LoginController;
+var _default = UserController;
 exports["default"] = _default;
-//# sourceMappingURL=LoginController.js.map
+//# sourceMappingURL=UserController.js.map

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
@@ -14,7 +14,7 @@ module.exports = {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return queryInterface.createTable('Users', {
+              return queryInterface.createTable("Users", {
                 id: {
                   allowNull: false,
                   autoIncrement: true,
@@ -34,10 +34,12 @@ module.exports = {
                   type: Sequelize.STRING
                 },
                 roleId: {
-                  type: Sequelize.STRING
+                  type: Sequelize.INTEGER,
+                  "default": 0
                 },
-                token: {
-                  type: Sequelize.STRING
+                isRemoved: {
+                  type: Sequelize.INTEGER,
+                  "default": 0
                 },
                 createdAt: {
                   allowNull: false,
@@ -70,7 +72,7 @@ module.exports = {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return queryInterface.dropTable('Users');
+              return queryInterface.dropTable("Users");
 
             case 2:
             case "end":
@@ -87,4 +89,4 @@ module.exports = {
     return down;
   }()
 };
-//# sourceMappingURL=20201212152453-create-user.js.map
+//# sourceMappingURL=20201222133355-create-user.js.map

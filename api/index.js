@@ -2,7 +2,9 @@ import config from "dotenv"
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
-import userRoutes from "./server/routes/userRoutes"
+import userRoutes from "./server/user/routes/UserRoutes"
+import adminRoutes from "./server/admin/index"
+import tokenControl from "./server/middleware/checkauth"
 
 config.config()
 
@@ -13,8 +15,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 const port = process.env.PORT || 8000
 app.use(cors())
-
 app.use("/user", userRoutes)
+app.use(tokenControl)
+app.use("/admin", adminRoutes)
 
 // when a random route is inputed
 app.get("*", (req, res) =>
@@ -22,9 +25,7 @@ app.get("*", (req, res) =>
     message: "Welcome to this API.",
   })
 )
-
-app.listen(port, () => {
-  console.log(`Server is running on PORT ${port}`)
-})
+const porta = process.env.PORT || 8080
+app.listen(porta, () => console.log("Example app listening on port 8080!"))
 
 export default app
