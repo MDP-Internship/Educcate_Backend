@@ -1,1 +1,1 @@
-web: node npm run babel-run
+web: node npm run start
