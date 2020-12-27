@@ -15,8 +15,6 @@ var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/cl
 
 var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
 
-var _util = _interopRequireDefault(require("../../utils/util"));
-
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
@@ -28,8 +26,6 @@ var _helpers = _interopRequireDefault(require("../../utils/helpers"));
 var _settings = require("../../src/config/settings");
 
 var _validate = require("../../utils/validate");
-
-var util = new _util["default"]();
 
 var UserController = /*#__PURE__*/function () {
   function UserController() {
