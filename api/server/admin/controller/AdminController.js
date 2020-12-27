@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import { encryptText } from "../../src/config/settings"
-import Util from "../../utils/util"
 import AdminService from "../services/AdminService"
 
 class AdminController {
