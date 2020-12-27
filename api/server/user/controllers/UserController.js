@@ -1,12 +1,9 @@
-import Util from "../../utils/util"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import LoginService from "../services/UserService"
 import Helpers from "../../utils/helpers"
 import { encrypText } from "../../src/config/settings"
 import { registerValidate, loginValidate } from "../../utils/validate"
-
-const util = new Util()
 
 class UserController {
   static async register(req, res) {
