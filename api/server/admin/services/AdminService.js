@@ -1,10 +1,19 @@
 import db from "../../src/models"
 
 class AdminService {
-  static async updateUser(id, name, surname, email, roleId) {
+  static async updateUser(
+    id,
+    name,
+    surname,
+    email,
+    currency_level,
+    basket,
+    credit,
+    roleId
+  ) {
     try {
       const userUpdate = await db.User.update(
-        { name, surname, email, roleId },
+        { name, surname, email, currency_level, basket, credit, roleId },
         { where: { id } }
       )
 
@@ -28,21 +37,28 @@ class AdminService {
       throw err
     }
   }
-  static async createRate(data){
+  static async createRate(data) {
     try {
-      const rate =  await db.Rate.create(data)
+      const rate = await db.Rate.create(data)
       if (rate) {
-        return rate;
+        return rate
       }
       return {
-        status : false,
-        message : 'Kur eklenirken hata oluştu'
+        status: false,
+        message: "Kur eklenirken hata oluştu",
       }
     } catch (error) {
-      throw err;
+      throw err
     }
   }
 
-  
+  static async updateRate(data, id) {
+    try {
+      const updatedRate = await db.Rate.update(data, { where: { id } })
+      return updatedRate
+    } catch (error) {
+      throw error
+    }
+  }
 }
 export default AdminService
