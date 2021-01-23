@@ -43,6 +43,14 @@ class UserController {
       if (!userRes) {
         return res.json({ status: "error", error: "user not found" })
       }
+      var isAdmin = false;
+      console.log(userRes.roleId);
+      if (userRes.roleId != 0) {
+        isAdmin = true;
+      }
+
+      console.log('isADMIN' +isAdmin);
+
       if (await bcrypt.compare(password, userRes.password)) {
         const token = jwt.sign(
           {
@@ -56,7 +64,7 @@ class UserController {
           { expiresIn: 84600 }
         )
         console.log(token)
-        return res.json({ type: true, token: token })
+        return res.json({ type: true, token: token , isAdmin:isAdmin })
       }
       res.json({ error: "e-mail and password incorrect" })
     }
