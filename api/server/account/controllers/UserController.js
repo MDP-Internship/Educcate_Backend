@@ -9,13 +9,14 @@ class UserController {
   static async register(req, res) {
     
     const reqFullBody = req.body
-    const isHaveUser = await Helpers.isHaveUser(email)
+    
+    const isHaveUser = await Helpers.isHaveUser(req.body.email)
 
     if (!isHaveUser) {
       const isRegisterValidateResult = registerValidate(reqFullBody)
 
       if (isRegisterValidateResult.type) {
-        const password = await bcrypt.hash(cryptedPassword, 10)
+        const password = await bcrypt.hash(req.body.password, 10)
 
         try {
           const userRes = await LoginService.register(req.body, password, req.headers.rate_id)
