@@ -28,5 +28,21 @@ class AdminService {
       throw err
     }
   }
+  static async createRate(data){
+    try {
+      const rate =  await db.Rate.create(data)
+      if (rate) {
+        return rate;
+      }
+      return {
+        status : false,
+        message : 'Kur eklenirken hata oluştu'
+      }
+    } catch (error) {
+      throw err;
+    }
+  }
+
+  
 }
 export default AdminService

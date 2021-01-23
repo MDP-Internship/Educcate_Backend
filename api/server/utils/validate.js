@@ -5,6 +5,8 @@ export function registerValidate(object) {
     surname: Joi.string().required().min(3),
     email: Joi.string().required().min(3),
     password: Joi.string().required().min(6),
+    currency_level: Joi.required(),
+    credit:Joi.number(),
     roleId: Joi.number(),
     isRemoved: Joi.number(),
   })

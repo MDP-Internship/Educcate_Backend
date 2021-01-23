@@ -10,10 +10,13 @@ class UserController {
     const {
       name,
       surname,
-      email,
       password: cryptedPassword,
+      email,
+      currency_level,
+      basket = " ",
+      credit = 1000,
       roleId = "0",
-      isRemoved = "0",
+      isRemoved = 0,
     } = req.body
     const reqFullBody = req.body
     const isHaveUser = await Helpers.isHaveUser(email)
@@ -28,8 +31,11 @@ class UserController {
           const userRes = await LoginService.register(
             name,
             surname,
-            email,
             password,
+            email,
+            currency_level,
+            basket,
+            credit,
             roleId,
             isRemoved
           )
@@ -66,7 +72,7 @@ class UserController {
             isRemoved: userRes.isRemoved,
           },
           encrypText,
-          { expiresIn: 1000 }
+          { expiresIn: 84600 }
         )
         console.log(token)
         return res.json({ type: true, token: token })
@@ -76,19 +82,8 @@ class UserController {
     res.json(isLoginValidateResult.error)
   }
 
-  static async userGetAll(req, res) {
-    const getAllResult = await LoginService.getAll()
-    const data = getAllResult.map((i) => {
-      return {
-        id: i.id,
-        name: i.name,
-        surname: i.surname,
-        email: i.email,
-        roleId: i.roleId,
-      }
-    })
-    res.json(data)
-  }
+  
+
 }
 
 export default UserController

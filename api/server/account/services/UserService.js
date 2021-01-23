@@ -1,13 +1,26 @@
 import db from "../../src/models"
 
 class LoginService {
-  static async register(name, surname, email, password, roleId, isRemoved) {
+  static async register(
+    name,
+    surname,
+    password,
+    email,
+    currency_level,
+    basket,
+    credit,
+    roleId,
+    isRemoved
+  ) {
     try {
       return await db.User.create({
         name,
         surname,
-        password,
         email,
+        password,
+        currency_level,
+        basket,
+        credit,
         roleId,
         isRemoved,
       })
@@ -24,9 +37,6 @@ class LoginService {
     }
   }
 
-  static async getAll() {
-    const userGet = db.User.findAll()
-    return userGet
-  }
+  
 }
 export default LoginService
