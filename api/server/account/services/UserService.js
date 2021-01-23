@@ -1,18 +1,23 @@
 import db from "../../src/models"
+import rate from "../../src/models/rate"
+import user from "../../src/models/user"
 
 class LoginService {
   static async register(body,password,rate_id) {
-    
     try {
 
+
+      const rate = await db.Rate.findOne({where: {id: rate_id}})
+      
+      const ratePrice = rate.price
       const userBody  = {
         name:body.name,
         surname:body.surname,
         email : body.email,
         password : password,
         currency_level: body.currency_level,
-        basket : " ",
-        credit : 1000,
+        basket : rate.id,
+        credit : 2500 - ratePrice,
         roleId : "0",
         isRemoved : 0
       }
