@@ -1,11 +1,8 @@
-
 import UserService from "../service/UserService"
 import Helpers from "../../utils/helpers"
 import { encrypText } from "../../src/config/settings"
 
-
 class UserController {
-
   static async getRates(req, res) {
     try {
       const result = await UserService.getRate(req.decoded.id)
@@ -13,6 +10,19 @@ class UserController {
         type: true,
         message: "Tüm kur bilgileri getirildi",
         data: result,
+      })
+    } catch (error) {
+      res.json(error)
+    }
+  }
+
+  static async getRate(req,res){
+    try {
+      const {id} =  req.params
+      const result = await  UserService.gettRate(id)
+      res.json({
+        type: true,
+        data:result
       })
     } catch (error) {
       res.json(error)
@@ -36,33 +46,41 @@ class UserController {
     }
   }
 
-  static async getUserRate(req,res){
+  static async getRateUser(req, res) {
     try {
-      const result = await UserService.getUserRate(req.params.id)
-      
+      const result = await UserService.getRateUser(req.params.id)
       res.json({
-        type:true,
-        data: result
+        type: true,
+        data: result,
       })
     } catch (error) {
       res.json(error.message)
     }
   }
 
-  static async buyRate(req,res){
-try {
-  const result = await UserService.buyRate(req.decoded.id);
-  res.json({
-    type: true,
-    data:result
-  })
-} catch (error) {
-  res.json(error)
-}
+  static async userRate(req, res){
+    try {
+      const result = await UserService.getUserRate(req.decoded.id)
+      res.json({
+        type: true,
+        data: result
+      })
+    } catch (error) {
+      res.json(error)
+    }
   }
 
-
-
+  static async buyRate(req, res) {
+    try {
+      const result = await UserService.buyRate(req.params.id, req.decoded.id)
+      res.json({
+        type: result.type,
+        message: result.message,
+      })
+    } catch (error) {
+      res.json(error)
+    }
+  }
 }
 
 export default UserController
