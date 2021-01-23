@@ -39,7 +39,7 @@ class UserController {
   static async getUserRate(req,res){
     try {
       const result = await UserService.getUserRate(req.params.id)
-      console.log(result);
+      
       res.json({
         type:true,
         data: result
@@ -47,6 +47,18 @@ class UserController {
     } catch (error) {
       res.json(error.message)
     }
+  }
+
+  static async buyRate(req,res){
+try {
+  const result = await UserService.buyRate(req.decoded.id);
+  res.json({
+    type: true,
+    data:result
+  })
+} catch (error) {
+  res.json(error)
+}
   }
 
 

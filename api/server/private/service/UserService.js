@@ -27,18 +27,42 @@ class LoginService {
   static async getUserRate(id) {
     try {
       const result = await db.User.findAll({
-        
         include: [
           {
             model: db.Rate,
-            where: {id},
-            attributes: []
-          }
-        ]
-       
+            where: { id },
+            attributes: [],
+          },
+        ],
       })
       return result
-    } catch (error) {throw error}
+    } catch (error) {
+      throw error
+    }
+  }
+
+  static async buyRate(user_id) {
+    try {
+      const user = await db.User.findOne({ 
+        where: { id: 8 },
+        include:[
+          { 
+            model: db.Rate,
+            
+            through: {attributes: []},
+          }
+
+          
+        ]
+      })
+  console.log(user.credit);
+  
+      
+      /* const user = await db.Rate.findAll({where:{id:user_id}}) */
+      return user
+    } catch (error) {
+      throw error
+    }
   }
 }
 export default LoginService

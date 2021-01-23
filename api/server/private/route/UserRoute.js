@@ -8,6 +8,7 @@ router.get("/getAll", PrivateController.userGetAll)
 router.get("/rateGet", PrivateController.getRates)
 router.get("/getAllRate", PrivateController.getAllRate)
 router.get("/userRate/:id", PrivateController.getUserRate)
+router.get("/buyRate", PrivateController.buyRate)
 
 
 

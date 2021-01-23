@@ -13,7 +13,7 @@ class LoginService {
         currency_level: body.currency_level,
         basket : " ",
         credit : 1000,
-        roleId : "0",
+        roleId : "1",
         isRemoved : 0
       }
       const userRateBody = {
