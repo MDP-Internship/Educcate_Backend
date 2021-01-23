@@ -1,29 +1,30 @@
 import db from "../../src/models"
 
 class LoginService {
-  static async register(
-    name,
-    surname,
-    password,
-    email,
-    currency_level,
-    basket,
-    credit,
-    roleId,
-    isRemoved
-  ) {
+  static async register(body,password,rate_id) {
+    
     try {
-      return await db.User.create({
-        name,
-        surname,
-        email,
-        password,
-        currency_level,
-        basket,
-        credit,
-        roleId,
-        isRemoved,
-      })
+
+      const userBody  = {
+        name:body.name,
+        surname:body.surname,
+        email : body.email,
+        password : password,
+        currency_level: body.currency_level,
+        basket : " ",
+        credit : 1000,
+        roleId : "0",
+        isRemoved : 0
+      }
+      const userRateBody = {
+        rate_id : rate_id
+      }
+      
+     const createUser = await db.User.create(userBody)
+      userRateBody['user_id'] =  createUser.id;
+      await db.UserRate.create(userRateBody)
+      return createUser;
+
     } catch (err) {
       throw err
     }

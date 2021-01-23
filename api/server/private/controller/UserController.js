@@ -36,6 +36,19 @@ class UserController {
     }
   }
 
+  static async getUserRate(req,res){
+    try {
+      const result = await UserService.getUserRate(req.params.id)
+      console.log(result);
+      res.json({
+        type:true,
+        data: result
+      })
+    } catch (error) {
+      res.json(error.message)
+    }
+  }
+
 
 
 }

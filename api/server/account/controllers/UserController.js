@@ -7,17 +7,7 @@ import { registerValidate, loginValidate } from "../../utils/validate"
 
 class UserController {
   static async register(req, res) {
-    const {
-      name,
-      surname,
-      password: cryptedPassword,
-      email,
-      currency_level,
-      basket = " ",
-      credit = 1000,
-      roleId = "0",
-      isRemoved = 0,
-    } = req.body
+    
     const reqFullBody = req.body
     const isHaveUser = await Helpers.isHaveUser(email)
 
@@ -28,17 +18,7 @@ class UserController {
         const password = await bcrypt.hash(cryptedPassword, 10)
 
         try {
-          const userRes = await LoginService.register(
-            name,
-            surname,
-            password,
-            email,
-            currency_level,
-            basket,
-            credit,
-            roleId,
-            isRemoved
-          )
+          const userRes = await LoginService.register(req.body, password, req.headers.rate_id)
 
           res.json({ type: true, data: userRes._previousDataValues })
         } catch (err) {
@@ -48,7 +28,7 @@ class UserController {
       }
       res.json(isRegisterValidateResult.error)
     }
-    res.send({ type: false, message: "email adresi kullanımda" })
+   
   }
 
   static async login(req, res) {

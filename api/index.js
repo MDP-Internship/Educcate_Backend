@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 const port = process.env.PORT || 8000
-
+app.use(cors())
 app.use("/user", userRoutes)
 //app.use(tokenControl)
 app.use("/admin", adminRoutes)
