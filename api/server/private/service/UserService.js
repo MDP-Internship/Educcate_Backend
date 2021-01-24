@@ -14,6 +14,14 @@ class LoginService {
       throw error
     }
   }
+  static async getUser(id){
+   try {
+    const user = await db.User.findOne({where:{id: id}})
+    return user
+   } catch (error) {
+     throw error
+   }
+  }
 
   static async gettRate(id){
     try {
