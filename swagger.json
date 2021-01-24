@@ -1,0 +1,170 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Edducate",
+   
+
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "mdp-loginapp.herokuapp.com",
+
+  "tags": [
+ 
+  ],
+
+  "paths": {
+    "/user/register/": {
+      "post": {
+        "tags": ["Register"],
+        "summary": "User Register",
+        "description": "",
+
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": { "$ref": "#/definitions/Register" }
+          }
+        ]
+      }
+    },
+
+    "/user/login/": {
+      "post": {
+        "tags": ["Login"],
+        "summary": "User Login",
+        "description": "",
+
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": { "$ref": "#/definitions/Login" }
+          }
+        ]
+      }
+    },
+
+    "/admin/delete/{id}": {
+      "put": {
+        "tags": ["Admin"],
+        "security": [
+          {
+            "JWT": []
+          }
+        ],
+        "summary": "Delete User",
+        "description": "",
+
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/News"
+            }
+          }
+        },
+        "parameters": [
+          { "required": true, "type": "string", "name": "id", "in": "path" }
+        ]
+      }
+    }
+
+   
+  },
+
+  "definitions": {
+    
+    "Register": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "currency_level": {
+          "type": "string"
+        }
+      }
+    },
+
+
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "boolean"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    },
+
+    "AddRate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "rate_hour": {
+          "type": "string"
+        },
+        "teacher_name": {
+          "type": "string"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "price": {
+          "type": "integer"
+        }
+      }
+    }
+  }
+}
