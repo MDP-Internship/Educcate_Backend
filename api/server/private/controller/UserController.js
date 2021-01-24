@@ -1,6 +1,7 @@
 import UserService from "../service/UserService"
 import Helpers from "../../utils/helpers"
 import { encrypText } from "../../src/config/settings"
+import { date } from "joi"
 
 class UserController {
   static async getRates(req, res) {
@@ -76,6 +77,18 @@ class UserController {
       res.json({
         type: result.type,
         message: result.message,
+      })
+    } catch (error) {
+      res.json(error)
+    }
+  }
+
+  static async getUser(req, res){
+    try {
+      const result =  await UserService.getUser(req.decoded.id)
+      res.json({
+        type: true,
+        data: result
       })
     } catch (error) {
       res.json(error)
