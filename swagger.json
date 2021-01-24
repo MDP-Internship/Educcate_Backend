@@ -10,7 +10,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "mdp-loginapp.herokuapp.com",
+  "host": "edducate-backend.herokuapp.com",
 
   "tags": [
  
