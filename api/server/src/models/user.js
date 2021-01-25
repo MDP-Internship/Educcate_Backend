@@ -11,11 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-        models.User.belongsToMany(models.Rate,{
-        through: models.UserRate,
-        foreignKey : 'user_id',
-        otherKey:  'rate_id',
-      })  
     }
   };
   User.init({
@@ -25,9 +20,12 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     currency_level: DataTypes.STRING,
     basket: DataTypes.STRING,
-    credit: DataTypes.INTEGER,
+    credit: DataTypes.DOUBLE,
     roleId: DataTypes.STRING,
-    isRemoved: DataTypes.INTEGER
+    isRemoved: DataTypes.INTEGER,
+    payment_method: DataTypes.INTEGER,
+    payment_number: DataTypes.INTEGER,
+    amount_paid: DataTypes.DOUBLE
   }, {
     sequelize,
     modelName: 'User',
