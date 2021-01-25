@@ -12,6 +12,7 @@ router.get("/getAllRate", PrivateController.getAllRate)
 router.get("/rateUser/:id", PrivateController.getRateUser)
 router.get("/buyRate/:id", PrivateController.buyRate)
 router.get("/userRate", PrivateController.userRate)
+router.put("/amount/:number", PrivateController.updateAmount)
 
 
 
