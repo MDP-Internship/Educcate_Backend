@@ -33,6 +33,17 @@ class LoginService {
     }
   }
 
+  static async updateAmount(user_id, amount_value){
+    try {
+      const amount = await db.User.increment(
+        { payment_number: -1 },
+        { where: { id: user_id } }
+      );
+    } catch (error) {
+      throw error
+    }
+  }
+
   static async getRate(id) {
     try {
       const onlyRate = await db.Rate.findOne({ where: { id: id } })
