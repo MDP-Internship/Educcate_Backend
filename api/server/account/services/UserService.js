@@ -17,9 +17,13 @@ class LoginService {
         password : password,
         currency_level: body.currency_level,
         basket : rate.id,
-        credit : 2500 - ratePrice,
+        credit : body.credit,
         roleId : "0",
-        isRemoved : 0
+        isRemoved : 0,
+        payment_method: body.payment_method,
+        payment_number: body.payment_number,
+        amount_paid: Number(body.credit)/Number(body.payment_number)
+
       }
       const userRateBody = {
         rate_id : rate_id
