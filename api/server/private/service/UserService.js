@@ -33,7 +33,7 @@ class LoginService {
     }
   }
 
-  static async updateAmount(user_id, amount_value){
+  static async updateAmount(user_id){
     try {
       const amount = await db.User.increment(
         { payment_number: -1 },
