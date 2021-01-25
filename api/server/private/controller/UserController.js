@@ -83,6 +83,18 @@ class UserController {
     }
   }
 
+  static async updateAmount(req, res){
+    try {
+      const result = await UserService.updateAmount(req.decoded.id)
+      res.json({
+        type: true,
+        message: 'Taksit ödeme işlemi başarı ile tamamlandı'
+      })
+    } catch (error) {
+      res.json(error)
+    }
+  }
+
   static async getUser(req, res){
     try {
       const result =  await UserService.getUser(req.decoded.id)
