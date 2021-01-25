@@ -6,10 +6,7 @@ class LoginService {
   static async register(body,password,rate_id) {
     try {
 
-
-      const rate = await db.Rate.findOne({where: {id: rate_id}})
-      
-      const ratePrice = rate.price
+     
       const userBody  = {
         name:body.name,
         surname:body.surname,
@@ -31,7 +28,7 @@ class LoginService {
       
      const createUser = await db.User.create(userBody)
       userRateBody['user_id'] =  createUser.id;
-      //await db.UserRate.create(userRateBody)
+      await db.UserRate.create(userRateBody)
       return createUser;
 
     } catch (err) {
