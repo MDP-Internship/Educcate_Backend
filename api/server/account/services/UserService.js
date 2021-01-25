@@ -18,7 +18,7 @@ class LoginService {
         currency_level: body.currency_level,
         basket : rate.id,
         credit : body.credit,
-        roleId : "0",
+        roleId : "1",
         isRemoved : 0,
         payment_method: body.payment_method,
         payment_number: body.payment_number,
