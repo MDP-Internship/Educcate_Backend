@@ -9,6 +9,8 @@ export function registerValidate(object) {
     credit:Joi.number(),
     roleId: Joi.number(),
     isRemoved: Joi.number(),
+    payment_method: Joi.number(),
+    payment_number: Joi.number()
   })
 
   const result = registerSchema.validate(object, { abortEarly: false })
