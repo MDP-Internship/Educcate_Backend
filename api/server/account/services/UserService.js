@@ -15,7 +15,7 @@ class LoginService {
         currency_level: body.currency_level,
         basket : rate.id,
         credit : body.credit,
-        roleId : "1",
+        roleId : "0",
         isRemoved : 0,
         payment_method: body.payment_method,
         payment_number: body.payment_number,
@@ -28,7 +28,7 @@ class LoginService {
       
      const createUser = await db.User.create(userBody)
       userRateBody['user_id'] =  createUser.id;
-     // await db.UserRate.create(userRateBody)
+     await db.UserRate.create(userRateBody)
       return createUser;
 
     } catch (err) {
