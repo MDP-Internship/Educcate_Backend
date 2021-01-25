@@ -31,7 +31,7 @@ class LoginService {
       
      const createUser = await db.User.create(userBody)
       userRateBody['user_id'] =  createUser.id;
-      await db.UserRate.create(userRateBody)
+      //await db.UserRate.create(userRateBody)
       return createUser;
 
     } catch (err) {
